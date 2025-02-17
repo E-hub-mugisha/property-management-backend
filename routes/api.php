@@ -20,15 +20,8 @@ Route::get('/blogs/{id}', [BlogsController::class, 'show']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-// Group routes that require authentication
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', [AuthController::class, 'user']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-    
-    // Admin routes with role check
-    Route::middleware('role:admin')->group(function () {
-        Route::apiResource('incomes', IncomeController::class);
-        Route::apiResource('expenses', ExpenseController::class);
-    });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return response()->json($request->user());
 });
