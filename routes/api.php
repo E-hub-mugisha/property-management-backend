@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\IncomeController;
 use App\Http\Controllers\admin\ExpenseController;
+use App\Http\Controllers\admin\PropertyController as AdminPropertyController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\frontend\BlogsController;
 use App\Http\Controllers\frontend\PropertyController;
@@ -25,3 +26,5 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return response()->json($request->user());
 });
+
+Route::apiResource('admin/properties', AdminPropertyController::class);
